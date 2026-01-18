@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHKaos - Distro Style Everyday</title>
+    
+    <!-- Menggunakan Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <!-- Icon Library -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'kaos-main': '#0F172A', /* Slate 900 - Dark Blueish */
+                        'kaos-accent': '#F97316', /* Orange 500 - Vibrant */
+                        'kaos-light': '#F1F5F9', /* Slate 100 */
+                        'kaos-gray': '#64748B',
+                    },
+                    fontFamily: {
+                        heading: ['"Montserrat"', 'sans-serif'],
+                        body: ['"Open Sans"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #ffffff;
+            font-family: 'Open Sans', sans-serif;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+        }
+        .hero-pattern {
+            background-color: #0F172A;
+            /* Pola dot halus */
+            background-image: radial-gradient(#334155 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        /* Animasi Toast */
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        .toast-enter {
+            animation: slideIn 0.3s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="text-gray-800 antialiased">
+
+    <!-- Navbar -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-2 group">
+                <i data-lucide="shirt" class="text-kaos-main h-8 w-8 group-hover:text-kaos-accent transition"></i>
+                <span class="text-2xl font-heading font-extrabold text-kaos-main tracking-tight">RR<span class="text-kaos-accent">Kaos</span></span>
+            </a>
+
+            <!-- Desktop Menu -->
+            <nav class="hidden md:flex space-x-8 items-center">
+                <a href="#home" class="text-gray-600 hover:text-kaos-accent transition font-semibold">Beranda</a>
+                <a href="#koleksi" class="text-gray-600 hover:text-kaos-accent transition font-semibold">Koleksi</a>
+                <a href="#stok" class="text-gray-600 hover:text-kaos-accent transition font-semibold">Cek Stok</a>
+                <a href="#tentang" class="text-gray-600 hover:text-kaos-accent transition font-semibold">Tentang</a>
+            </nav>
+
+            <!-- Cart Icon & Mobile Menu Button -->
+            <div class="flex items-center gap-4">
+                <button class="relative p-2 hover:bg-gray-100 rounded-full transition" onclick="toggleCart()">
+                    <i data-lucide="shopping-cart" class="text-kaos-main"></i>
+                    <span id="cart-count" class="absolute top-0 right-0 bg-kaos-accent text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center transform scale-0 transition-transform duration-200">0</span>
+                </button>
+                <button class="md:hidden p-2 text-kaos-main">
+                    <i data-lucide="menu"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-pattern text-white py-24 relative overflow-hidden">
+        <div class="container mx-auto px-6 relative z-10 text-center md:text-left flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-12 md:mb-0">
+                <span class="inline-block bg-kaos-accent text-white text-xs font-bold px-3 py-1 rounded-full mb-4 uppercase tracking-wider">New Arrival 2026</span>
+                <h1 class="text-4xl md:text-6xl font-heading font-extrabold leading-tight mb-6">
+                    Style Simpel, <br/> Kualitas Maksimal
+                </h1>
+                <p class="text-gray-400 text-lg mb-8 leading-relaxed max-w-lg">
+                    Koleksi kaos Cotton Combed 30s premium dengan desain original. Nyaman dipakai seharian, tetap keren di setiap suasana.
+                </p>
+                <div class="flex gap-4 justify-center md:justify-start">
+                    <a href="#koleksi" class="inline-block bg-kaos-accent text-white font-bold py-3 px-8 rounded-lg hover:bg-white hover:text-kaos-accent transition duration-300 shadow-lg shadow-kaos-accent/30">
+                        Beli Sekarang
+                    </a>
+                    <a href="#tentang" class="inline-block border border-gray-500 text-white font-bold py-3 px-8 rounded-lg hover:border-white transition duration-300">
+                        Pelajari Kami
+                    </a>
+                </div>
+            </div>
+            <div class="md:w-1/2 flex justify-center">
+                <!-- Hero Image: Model wearing t-shirt -->
+                <div class="relative w-80 h-[28rem] bg-gray-700 rounded-2xl overflow-hidden shadow-2xl border-4 border-gray-600 transform rotate-3 hover:rotate-0 transition duration-500">
+                     <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=800&auto=format&fit=crop" alt="Model Kaos Putih" class="w-full h-full object-cover opacity-90" onerror="this.src='https://placehold.co/400x600/1A1A1A/FFF?text=Model+Kaos'">
+                     <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
+                         <p class="text-white font-bold">Basic White Tee</p>
+                         <p class="text-gray-300 text-sm">Best Seller</p>
+                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="py-12 bg-white border-b border-gray-100">
+        <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            <div class="p-6 rounded-xl border border-gray-100 hover:border-kaos-accent/30 transition group">
+                <div class="bg-kaos-light w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-kaos-main group-hover:bg-kaos-accent group-hover:text-white transition">
+                    <i data-lucide="feather"></i>
+                </div>
+                <h3 class="font-heading font-bold text-xl mb-2">Bahan Premium</h3>
+                <p class="text-gray-500 text-sm">100% Cotton Combed 30s yang lembut, menyerap keringat, dan tidak panas.</p>
+            </div>
+            <div class="p-6 rounded-xl border border-gray-100 hover:border-kaos-accent/30 transition group">
+                <div class="bg-kaos-light w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-kaos-main group-hover:bg-kaos-accent group-hover:text-white transition">
+                    <i data-lucide="printer"></i>
+                </div>
+                <h3 class="font-heading font-bold text-xl mb-2">Sablon Awet</h3>
+                <p class="text-gray-500 text-sm">Menggunakan tinta Plastisol High Density yang tidak mudah pecah atau luntur.</p>
+            </div>
+            <div class="p-6 rounded-xl border border-gray-100 hover:border-kaos-accent/30 transition group">
+                <div class="bg-kaos-light w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-kaos-main group-hover:bg-kaos-accent group-hover:text-white transition">
+                    <i data-lucide="refresh-ccw"></i>
+                </div>
+                <h3 class="font-heading font-bold text-xl mb-2">Garansi Retur</h3>
+                <p class="text-gray-500 text-sm">Salah ukuran atau ada cacat? Tukar baru gratis dalam 7 hari.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Collection -->
+    <section id="koleksi" class="py-20 bg-kaos-light">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-heading font-bold text-kaos-main mb-4">Katalog Pilihan</h2>
+                <div class="w-20 h-1.5 bg-kaos-accent mx-auto rounded-full"></div>
+                <p class="mt-4 text-gray-600">Temukan gaya yang pas buat OOTD harianmu.</p>
+            </div>
+
+            <!-- Grid Produk -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Produk 1: Basic Black -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-sm card-hover transition duration-300 group">
+                    <div class="relative overflow-hidden h-72 bg-gray-200">
+                        <img src="https://images.unsplash.com/photo-1581655353564-df123a1eb820?q=80&w=800&auto=format&fit=crop" alt="Black T-shirt" class="w-full h-full object-cover transition duration-500 group-hover:scale-110" onerror="this.src='https://placehold.co/600x400/222/FFF?text=Black+Tee'">
+                        <span class="absolute top-4 left-4 bg-kaos-main text-white text-xs font-bold px-3 py-1 rounded-md">Essential</span>
+                        <div class="absolute bottom-4 right-4 translate-y-20 group-hover:translate-y-0 transition duration-300">
+                            <button onclick="addToCart('Basic Black Tee', 89000)" class="bg-white text-kaos-main p-3 rounded-full shadow-lg hover:bg-kaos-accent hover:text-white">
+                                <i data-lucide="plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold text-gray-800">Basic Black Tee</h3>
+                            <span class="text-gray-400 text-xs uppercase font-bold tracking-wide">Unisex</span>
+                        </div>
+                        <p class="text-gray-500 text-sm mb-4">Kaos polos hitam pekat. Wajib punya untuk gaya minimalis.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-kaos-accent font-extrabold text-xl">Rp 89.000</span>
+                            <div class="flex text-yellow-400 text-xs">
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Produk 2: Oversized Streetwear -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-sm card-hover transition duration-300 group">
+                    <div class="relative overflow-hidden h-72 bg-gray-200">
+                        <img src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?q=80&w=800&auto=format&fit=crop" alt="Graphic Tee" class="w-full h-full object-cover transition duration-500 group-hover:scale-110" onerror="this.src='https://placehold.co/600x400/222/FFF?text=Graphic+Tee'">
+                        <span class="absolute top-4 left-4 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-md">Hot Item</span>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold text-gray-800">Urban Graphic White</h3>
+                            <span class="text-gray-400 text-xs uppercase font-bold tracking-wide">Pria</span>
+                        </div>
+                        <p class="text-gray-500 text-sm mb-4">Kaos putih dengan sablon grafis artistik di bagian punggung.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-kaos-accent font-extrabold text-xl">Rp 125.000</span>
+                            <button onclick="addToCart('Urban Graphic White', 125000)" class="text-kaos-main hover:text-kaos-accent font-semibold text-sm">
+                                + Keranjang
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Produk 3: Striped Tee -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-sm card-hover transition duration-300 group">
+                    <div class="relative overflow-hidden h-72 bg-gray-200">
+                        <img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?q=80&w=800&auto=format&fit=crop" alt="Striped Tee" class="w-full h-full object-cover transition duration-500 group-hover:scale-110" onerror="this.src='https://placehold.co/600x400/222/FFF?text=Striped'">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold text-gray-800">Classic Striped</h3>
+                            <span class="text-gray-400 text-xs uppercase font-bold tracking-wide">Unisex</span>
+                        </div>
+                        <p class="text-gray-500 text-sm mb-4">Motif garis-garis horizontal navy & putih. Gaya retro 90an.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-kaos-accent font-extrabold text-xl">Rp 110.000</span>
+                            <button onclick="addToCart('Classic Striped', 110000)" class="text-kaos-main hover:text-kaos-accent font-semibold text-sm">
+                                + Keranjang
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                 <!-- Produk 4: Oversized Beige -->
+                 <div class="bg-white rounded-2xl overflow-hidden shadow-sm card-hover transition duration-300 group">
+                    <div class="relative overflow-hidden h-72 bg-gray-200">
+                        <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=800&auto=format&fit=crop" alt="Black Oversized" class="w-full h-full object-cover transition duration-500 group-hover:scale-110" onerror="this.src='https://placehold.co/600x400/222/FFF?text=Oversized'">
+                        <span class="absolute top-4 left-4 bg-purple-500 text-white text-xs font-bold px-3 py-1 rounded-md">Trend</span>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold text-gray-800">Oversized Street</h3>
+                            <span class="text-gray-400 text-xs uppercase font-bold tracking-wide">Unisex</span>
+                        </div>
+                        <p class="text-gray-500 text-sm mb-4">Potongan oversized boxy fit. Sangat nyaman untuk hangout.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-kaos-accent font-extrabold text-xl">Rp 135.000</span>
+                            <button onclick="addToCart('Oversized Street', 135000)" class="text-kaos-main hover:text-kaos-accent font-semibold text-sm">
+                                + Keranjang
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                 <!-- Produk 5: Polo Shirt -->
+                 <div class="bg-white rounded-2xl overflow-hidden shadow-sm card-hover transition duration-300 group">
+                    <div class="relative overflow-hidden h-72 bg-gray-200">
+                        <img src="https://images.unsplash.com/photo-1626557981101-aae6f84aa6ff?q=80&w=800&auto=format&fit=crop" alt="Polo Shirt" class="w-full h-full object-cover transition duration-500 group-hover:scale-110" onerror="this.src='https://placehold.co/600x400/222/FFF?text=Polo'">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold text-gray-800">Smart Polo Navy</h3>
+                            <span class="text-gray-400 text-xs uppercase font-bold tracking-wide">Pria</span>
+                        </div>
+                        <p class="text-gray-500 text-sm mb-4">Kaos kerah (Polo) bahan lacoste pique. Semi-formal look.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-kaos-accent font-extrabold text-xl">Rp 150.000</span>
+                            <button onclick="addToCart('Smart Polo Navy', 150000)" class="text-kaos-main hover:text-kaos-accent font-semibold text-sm">
+                                + Keranjang
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                 <!-- Produk 6: Long Sleeve -->
+                 <div class="bg-white rounded-2xl overflow-hidden shadow-sm card-hover transition duration-300 group">
+                    <div class="relative overflow-hidden h-72 bg-gray-200">
+                        <img src="https://images.unsplash.com/photo-1618354691373-d851c5c3a990?q=80&w=800&auto=format&fit=crop" alt="Black Shirt Model" class="w-full h-full object-cover transition duration-500 group-hover:scale-110" onerror="this.src='https://placehold.co/600x400/222/FFF?text=Long+Sleeve'">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-bold text-gray-800">Long Sleeve Basic</h3>
+                            <span class="text-gray-400 text-xs uppercase font-bold tracking-wide">Pria</span>
+                        </div>
+                        <p class="text-gray-500 text-sm mb-4">Kaos lengan panjang rib tangan. Cocok untuk cuaca dingin.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-kaos-accent font-extrabold text-xl">Rp 105.000</span>
+                            <button onclick="addToCart('Long Sleeve Basic', 105000)" class="text-kaos-main hover:text-kaos-accent font-semibold text-sm">
+                                + Keranjang
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            
+            <div class="text-center mt-16">
+                <button class="bg-transparent border-2 border-kaos-main text-kaos-main font-bold py-3 px-10 rounded-full hover:bg-kaos-main hover:text-white transition duration-300 transform hover:-translate-y-1">
+                    Lihat Semua Produk
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stock Section -->
+    <section id="stok" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-10">
+                <div class="md:w-2/3">
+                    <h2 class="text-3xl font-heading font-bold text-kaos-main mb-2">Stok Gudang Realtime</h2>
+                    <p class="text-gray-600">Pastikan ukuranmu tersedia sebelum checkout.</p>
+                </div>
+                <div class="mt-4 md:mt-0">
+                    <span class="text-sm text-gray-500">Terakhir update: 5 Menit yang lalu</span>
+                </div>
+            </div>
+
+            <div class="overflow-hidden bg-white shadow-xl rounded-xl border border-gray-100">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full leading-normal">
+                        <thead>
+                            <tr class="bg-gray-50 border-b border-gray-200">
+                                <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Produk</th>
+                                <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Varian</th>
+                                <th class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Harga</th>
+                                <th class="px-6 py-4 text-center text-xs font-bold text-gray-500 uppercase tracking-wider">Sisa Stok</th>
+                                <th class="px-6 py-4 text-center text-xs font-bold text-gray-500 uppercase tracking-wider">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100">
+                            <!-- Item 1 -->
+                            <tr class="hover:bg-gray-50 transition">
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0 w-12 h-12 rounded-lg overflow-hidden">
+                                            <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1581655353564-df123a1eb820?q=80&w=200&auto=format&fit=crop" alt="Black Tee" onerror="this.src='https://placehold.co/100x100/222/FFF?text=Black+Tee'" />
+                                        </div>
+                                        <div class="ml-4">
+                                            <p class="text-sm font-bold text-gray-900">Basic Black Tee</p>
+                                            <p class="text-xs text-gray-400">SKU: BLK-001</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 text-sm text-gray-600">Size L</td>
+                                <td class="px-6 py-4 text-sm font-semibold text-gray-900">Rp 89.000</td>
+                                <td class="px-6 py-4 text-center">
+                                    <span class="bg-gray-100 text-gray-800 py-1 px-3 rounded-full text-xs font-bold">45</span>
+                                </td>
+                                <td class="px-6 py-4 text-center">
+                                    <span class="text-green-600 bg-green-100 px-3 py-1 rounded-full text-xs font-bold">Ready</span>
+                                </td>
+                            </tr>
+
+                            <!-- Item 2 -->
+                            <tr class="hover:bg-gray-50 transition">
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0 w-12 h-12 rounded-lg overflow-hidden">
+                                            <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?q=80&w=200&auto=format&fit=crop" alt="Graphic Tee" onerror="this.src='https://placehold.co/100x100/222/FFF?text=Graphic'" />
+                                        </div>
+                                        <div class="ml-4">
+                                            <p class="text-sm font-bold text-gray-900">Urban Graphic White</p>
+                                            <p class="text-xs text-gray-400">SKU: WHT-GFX</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 text-sm text-gray-600">Size M</td>
+                                <td class="px-6 py-4 text-sm font-semibold text-gray-900">Rp 125.000</td>
+                                <td class="px-6 py-4 text-center">
+                                    <span class="bg-red-100 text-red-800 py-1 px-3 rounded-full text-xs font-bold">5</span>
+                                </td>
+                                <td class="px-6 py-4 text-center">
+                                    <span class="text-orange-600 bg-orange-100 px-3 py-1 rounded-full text-xs font-bold">Hampir Habis</span>
+                                </td>
+                            </tr>
+
+                            <!-- Item 3 -->
+                            <tr class="hover:bg-gray-50 transition">
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0 w-12 h-12 rounded-lg overflow-hidden">
+                                            <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?q=80&w=200&auto=format&fit=crop" alt="Striped" onerror="this.src='https://placehold.co/100x100/222/FFF?text=Striped'" />
+                                        </div>
+                                        <div class="ml-4">
+                                            <p class="text-sm font-bold text-gray-900">Classic Striped</p>
+                                            <p class="text-xs text-gray-400">SKU: STRP-90</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 text-sm text-gray-600">Size XL</td>
+                                <td class="px-6 py-4 text-sm font-semibold text-gray-900">Rp 110.000</td>
+                                <td class="px-6 py-4 text-center">
+                                    <span class="bg-gray-100 text-gray-800 py-1 px-3 rounded-full text-xs font-bold">12</span>
+                                </td>
+                                <td class="px-6 py-4 text-center">
+                                    <span class="text-green-600 bg-green-100 px-3 py-1 rounded-full text-xs font-bold">Ready</span>
+                                </td>
+                            </tr>
+
+                            <!-- Item 4 -->
+                            <tr class="hover:bg-gray-50 transition">
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0 w-12 h-12 rounded-lg overflow-hidden">
+                                            <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=200&auto=format&fit=crop" alt="Oversized" onerror="this.src='https://placehold.co/100x100/222/FFF?text=Oversized'" />
+                                        </div>
+                                        <div class="ml-4">
+                                            <p class="text-sm font-bold text-gray-900">Oversized Street</p>
+                                            <p class="text-xs text-gray-400">SKU: OVR-BLK</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 text-sm text-gray-600">All Size</td>
+                                <td class="px-6 py-4 text-sm font-semibold text-gray-900">Rp 135.000</td>
+                                <td class="px-6 py-4 text-center">
+                                    <span class="bg-gray-100 text-gray-400 py-1 px-3 rounded-full text-xs font-bold">0</span>
+                                </td>
+                                <td class="px-6 py-4 text-center">
+                                    <span class="text-red-600 bg-red-100 px-3 py-1 rounded-full text-xs font-bold">Sold Out</span>
+                                </td>
+                            </tr>
+                            
+                             <!-- Item 5 -->
+                            <tr class="hover:bg-gray-50 transition">
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0 w-12 h-12 rounded-lg overflow-hidden">
+                                            <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1626557981101-aae6f84aa6ff?q=80&w=200&auto=format&fit=crop" alt="Polo" onerror="this.src='https://placehold.co/100x100/222/FFF?text=Polo'" />
+                                        </div>
+                                        <div class="ml-4">
+                                            <p class="text-sm font-bold text-gray-900">Smart Polo Navy</p>
+                                            <p class="text-xs text-gray-400">SKU: PLO-NVY</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 text-sm text-gray-600">Size L</td>
+                                <td class="px-6 py-4 text-sm font-semibold text-gray-900">Rp 150.000</td>
+                                <td class="px-6 py-4 text-center">
+                                    <span class="bg-gray-100 text-gray-800 py-1 px-3 rounded-full text-xs font-bold">20</span>
+                                </td>
+                                <td class="px-6 py-4 text-center">
+                                    <span class="text-green-600 bg-green-100 px-3 py-1 rounded-full text-xs font-bold">Ready</span>
+                                </td>
+                            </tr>
+
+                            <!-- Item 6: Long Sleeve (Ditambahkan Baru) -->
+                            <tr class="hover:bg-gray-50 transition">
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0 w-12 h-12 rounded-lg overflow-hidden">
+                                            <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1618354691373-d851c5c3a990?q=80&w=200&auto=format&fit=crop" alt="Long Sleeve" onerror="this.src='https://placehold.co/100x100/222/FFF?text=Long+Sleeve'" />
+                                        </div>
+                                        <div class="ml-4">
+                                            <p class="text-sm font-bold text-gray-900">Long Sleeve Basic</p>
+                                            <p class="text-xs text-gray-400">SKU: LS-Basic</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 text-sm text-gray-600">Size XL</td>
+                                <td class="px-6 py-4 text-sm font-semibold text-gray-900">Rp 105.000</td>
+                                <td class="px-6 py-4 text-center">
+                                    <span class="bg-gray-100 text-gray-800 py-1 px-3 rounded-full text-xs font-bold">15</span>
+                                </td>
+                                <td class="px-6 py-4 text-center">
+                                    <span class="text-green-600 bg-green-100 px-3 py-1 rounded-full text-xs font-bold">Ready</span>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="tentang" class="bg-kaos-main text-white py-20 relative overflow-hidden">
+        <!-- Decoration -->
+        <div class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 bg-kaos-accent rounded-full opacity-10 blur-3xl"></div>
+        <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-blue-500 rounded-full opacity-10 blur-3xl"></div>
+
+        <div class="container mx-auto px-6 flex flex-col md:flex-row items-center gap-12 relative z-10">
+            <div class="md:w-1/2">
+                <!-- About Image: T-shirt Stack -->
+                <img src="https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?q=80&w=800&auto=format&fit=crop" alt="Tumpukan Kaos" class="rounded-2xl shadow-2xl transform -rotate-2 hover:rotate-0 transition duration-500 border-4 border-gray-700" onerror="this.src='https://placehold.co/600x400/333/FFF?text=Toko+Kaos'">
+            </div>
+            <div class="md:w-1/2">
+                <h4 class="text-kaos-accent font-bold uppercase tracking-widest mb-2">Our Story</h4>
+                <h2 class="text-3xl md:text-4xl font-heading font-bold text-white mb-6">Lebih dari Sekadar Kain</h2>
+                <p class="text-gray-400 mb-6 leading-relaxed text-lg">
+                    RRKaos lahir dari kecintaan pada *street culture* dan desain minimalis. Kami percaya bahwa kaos adalah kanvas ekspresi diri. Sejak 2023, kami berkomitmen menghadirkan basic wear berkualitas tinggi yang tahan lama, tidak melar, dan warnanya tetap solid meski dicuci berkali-kali.
+                </p>
+                <div class="flex gap-8 mt-8 border-t border-gray-700 pt-8">
+                    <div>
+                        <span class="block text-4xl font-heading font-extrabold text-white">50k+</span>
+                        <span class="text-sm text-gray-400">Kaos Terjual</span>
+                    </div>
+                    <div>
+                        <span class="block text-4xl font-heading font-extrabold text-white">4.9</span>
+                        <span class="text-sm text-gray-400">Rating Customer</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white pt-20 pb-10 border-t border-gray-800">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+                <div class="col-span-1 md:col-span-1">
+                    <div class="flex items-center gap-2 mb-6">
+                         <i data-lucide="shirt" class="text-kaos-accent h-6 w-6"></i>
+                         <span class="text-2xl font-heading font-bold text-white">RR<span class="text-kaos-accent">Kaos</span></span>
+                    </div>
+                    <p class="text-gray-500 text-sm leading-relaxed mb-6">Local brand kebanggaan Indonesia. Support produk lokal untuk ekonomi yang lebih kuat.</p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-kaos-accent transition"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-kaos-accent transition"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-kaos-accent transition"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-6">Bantuan</h4>
+                    <ul class="space-y-3 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-kaos-accent transition flex items-center gap-2"><i data-lucide="chevron-right" class="w-3 h-3"></i> Cara Order</a></li>
+                        <li><a href="#" class="hover:text-kaos-accent transition flex items-center gap-2"><i data-lucide="chevron-right" class="w-3 h-3"></i> Size Chart</a></li>
+                        <li><a href="#" class="hover:text-kaos-accent transition flex items-center gap-2"><i data-lucide="chevron-right" class="w-3 h-3"></i> Konfirmasi Bayar</a></li>
+                        <li><a href="#" class="hover:text-kaos-accent transition flex items-center gap-2"><i data-lucide="chevron-right" class="w-3 h-3"></i> FAQs</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-6">Kontak</h4>
+                    <ul class="space-y-4 text-sm text-gray-400">
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="map-pin" class="w-5 h-5 text-kaos-accent mt-0.5"></i> 
+                            <span>Jl. Distro No. 88, Kemang,<br>Jakarta Selatan 12730</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i data-lucide="phone" class="w-5 h-5 text-kaos-accent"></i> 
+                            <span>+62 812 9988 7766</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i data-lucide="mail" class="w-5 h-5 text-kaos-accent"></i> 
+                            <span>rianhendrawan2417@gmail.com</span>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-6">Newsletter</h4>
+                    <p class="text-gray-500 text-sm mb-4">Dapat voucher diskon 10% untuk pembelian pertama.</p>
+                    <form class="flex flex-col gap-3">
+                        <input type="email" placeholder="Email kamu" class="bg-gray-800 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-kaos-accent border border-gray-700">
+                        <button class="bg-kaos-accent text-white font-bold px-4 py-3 rounded-lg hover:bg-orange-600 transition shadow-lg shadow-kaos-accent/20">Gabung Sekarang</button>
+                    </form>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 text-center text-sm text-gray-600">
+                <p>&copy; 2026 RRKaos. All rights reserved. Designed with style.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-3 pointer-events-none"></div>
+
+    <script>
+        // Inisialisasi Lucide Icons
+        lucide.createIcons();
+
+        // State Keranjang
+        let cartCount = 0;
+        const cartCountElement = document.getElementById('cart-count');
+
+        // Fungsi format Rupiah
+        const formatRupiah = (number) => {
+            return new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR',
+                minimumFractionDigits: 0
+            }).format(number);
+        }
+
+        // Fungsi Tambah ke Keranjang
+        function addToCart(productName, price) {
+            cartCount++;
+            
+            // Update Badge
+            cartCountElement.textContent = cartCount;
+            cartCountElement.classList.remove('scale-0');
+            cartCountElement.classList.add('scale-100');
+
+            // Animasi Bounce
+            cartCountElement.classList.remove('scale-100');
+            void cartCountElement.offsetWidth; // trigger reflow
+            cartCountElement.classList.add('scale-125');
+            setTimeout(() => {
+                cartCountElement.classList.remove('scale-125');
+                cartCountElement.classList.add('scale-100');
+            }, 150);
+
+            // Tampilkan Notifikasi Toast
+            showToast(productName, price);
+        }
+
+        // Fungsi Menampilkan Toast
+        function showToast(name, price) {
+            const container = document.getElementById('toast-container');
+            
+            const toast = document.createElement('div');
+            toast.className = 'toast-enter pointer-events-auto bg-white border-l-4 border-kaos-accent shadow-2xl rounded-r-lg p-4 flex items-start gap-4 w-80 transform transition-all duration-300';
+            toast.innerHTML = `
+                <div class="text-green-500 mt-0.5">
+                    <i data-lucide="check-circle" class="w-5 h-5"></i>
+                </div>
+                <div class="flex-1">
+                    <h4 class="font-bold text-sm text-gray-900">Masuk Keranjang!</h4>
+                    <p class="text-xs text-gray-500 mt-1 line-clamp-1">${name}</p>
+                    <p class="text-sm font-bold text-kaos-accent mt-1">${formatRupiah(price)}</p>
+                </div>
+                <button onclick="this.parentElement.remove()" class="text-gray-400 hover:text-gray-600">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            `;
+
+            container.appendChild(toast);
+            lucide.createIcons(); // Render icon di dalam toast baru
+
+            // Hapus toast otomatis
+            setTimeout(() => {
+                if (toast.parentElement) {
+                    toast.style.opacity = '0';
+                    toast.style.transform = 'translateY(20px)';
+                    setTimeout(() => {
+                        if (toast.parentElement) toast.remove();
+                    }, 300);
+                }
+            }, 4000);
+        }
+
+        // Fungsi Toggle Cart
+        function toggleCart() {
+            if(cartCount === 0) {
+                alert("Keranjang belanjamu masih kosong nih. Yuk pilih kaos favoritmu!");
+            } else {
+                alert(`Siap checkout? Kamu punya ${cartCount} item di keranjang.`);
+            }
+        }
+    </script>
+</body>
+</html>
